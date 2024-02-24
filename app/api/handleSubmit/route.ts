@@ -4,7 +4,7 @@ import { Octokit } from "octokit";
 export async function POST(request: Request){
     try {
     const octokit = new Octokit({
-        auth: 'YOUR-TOKEN'
+        auth: process.env.OCTOKIT_TOKEN
       })
     await octokit.request('POST /repos/declan-wade/roster-master/issues', {
     owner: 'declan-wade',
