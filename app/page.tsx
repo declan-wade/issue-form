@@ -38,9 +38,7 @@ export default function Home() {
         body: file,
       }
     );
-
     const newBlob = (await response.json()) as PutBlobResult;
-
     setBlob(newBlob);
     setBlobUrl(newBlob.url)
   }
@@ -49,10 +47,10 @@ export default function Home() {
     e.preventDefault();
     if (name.length > 1) {
       const response = await fetch(
-        `/api/handleUpload`,
+        `/api/handleSubmit`,
         {
           method: "POST",
-          body: JSON.stringify({"name": name, "description": description}),
+          body: JSON.stringify({"name": name, "description": description, "attachment": blobUrl}),
         }
       );
         console.log(response)

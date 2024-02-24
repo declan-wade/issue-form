@@ -1,7 +1,11 @@
+import { error } from "console";
 import { NextResponse } from "next/server";
 import { Octokit } from "octokit";
 
 export async function POST(request: Request){
+    const incoming = await request.json()
+    const body = incoming.body
+    console.info(incoming)
     try {
     const octokit = new Octokit({
         auth: process.env.OCTOKIT_TOKEN
@@ -10,7 +14,10 @@ export async function POST(request: Request){
     owner: 'declan-wade',
     repo: 'roster-master',
     title: 'Found a bug',
-    body: request.body,
+    body: `Name or Company: ${body.name}
+    Description: ${body.description}
+    Attachments: ${body.attachments}
+    `,
     assignees: [
         'declan-wade'
     ],
@@ -26,6 +33,7 @@ export async function POST(request: Request){
 
     
   } catch {
+    console.error("GitHub POST request failed: ", error)
     return NextResponse.json(
       { error: "Internal Server Error" },
       { status: 500 }
