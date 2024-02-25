@@ -5,7 +5,10 @@ import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
+import Toast from 'react-bootstrap/Toast';
+import Alert from 'react-bootstrap/Alert';
 import type { PutBlobResult } from "@vercel/blob";
+import ToastContainer from 'react-bootstrap/ToastContainer';
 
 export default function Home() {
   const [name, setName] = useState("");
@@ -16,6 +19,8 @@ export default function Home() {
   const [filename, setFilename] = React.useState("");
   const inputFileRef = React.useRef<HTMLInputElement>(null);
   const [blob, setBlob] = React.useState<PutBlobResult | null>(null);
+  const [openSuccess, setOpenSuccess] = React.useState(false);
+  const [openError, setOpenError] = React.useState(false);
 
   const updateFilename = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) {
@@ -53,17 +58,25 @@ export default function Home() {
           body: JSON.stringify({"name": name, "description": description, "attachment": blobUrl}),
         }
       );
-        console.log(response)
+      const payload = await response.json()
+        console.log(payload)
+        if (response.ok) {
+          window.location.assign(`/success?issue_id=${payload.data.number}&issue_url=${payload.data.html_url}`);
+        } else {
+          setOpenError(true);
+        }
     } else {
       setNameValid(false);
     }
+
   };
 
 
   return (
     <div>
-      <Navbar expand="lg" bg="primary" data-bs-theme="dark">
+      <Navbar expand="lg" bg="warning" data-bs-theme="dark">
         <Container>
+          
           <Navbar.Brand href="#home">
             <img
               alt=""
@@ -76,8 +89,26 @@ export default function Home() {
         </Container>
       </Navbar>
       <div className="container mt-5">
-        <h4>👋 Start Here</h4>
+        <h3>👋 Start Here</h3>
         <br></br>
+        <ToastContainer
+          className="p-3"
+          position='top-end'
+          style={{ zIndex: 1 }}
+        >
+        <Toast show={openError} delay={6000}>
+        <Toast.Header>Error</Toast.Header>
+        <Toast.Body>
+          There was an error submitting the form!
+        </Toast.Body>
+      </Toast>
+      <Toast show={openSuccess} delay={6000}>
+        <Toast.Header>Success</Toast.Header>
+        <Toast.Body>
+          Form submitted successfully!
+        </Toast.Body>
+      </Toast>
+      </ToastContainer>
         <Form onSubmit={handleSubmit}>
           <div className="mb-3">
             <Form.Label className="form-label">Name or Company</Form.Label>
