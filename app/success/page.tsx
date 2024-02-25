@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { Suspense, useState } from "react";
 import Navbar from "react-bootstrap/Navbar";
 import Container from "react-bootstrap/Container";
 import {useSearchParams } from 'next/navigation'
@@ -30,10 +30,12 @@ export default function Success() {
       <div className="container mt-5">
         <h3>Submitted successfully!</h3>
         <p>We have got your issue, leave it with us while we investigate!</p>
+        <Suspense>
         <Card body bg="secondary" text="light">
         <h5>Your issue reference: #{id}</h5>
         <Button variant="outline-light" href={url}>View issue on GitHub</Button>
         </Card>
+        </Suspense>
         <br></br>
 
       </div>
