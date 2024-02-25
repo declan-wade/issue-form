@@ -2,16 +2,10 @@
 import React, { Suspense, useState } from "react";
 import Navbar from "react-bootstrap/Navbar";
 import Container from "react-bootstrap/Container";
-import {useSearchParams } from 'next/navigation'
-import Button from 'react-bootstrap/Button'
-import Card from 'react-bootstrap/Card';
+import Id from "./id";
 
 export default function Success() {
-    const searchParams = useSearchParams()
-    const id = searchParams.get("issue_id");
-    const url: any = searchParams.get("issue_url");
-    console.log(id)
-    console.log(url)
+
   return (
     <div>
       <Navbar expand="lg" bg="warning" data-bs-theme="dark">
@@ -31,10 +25,7 @@ export default function Success() {
         <h3>Submitted successfully!</h3>
         <p>We have got your issue, leave it with us while we investigate!</p>
         <Suspense>
-        <Card body bg="secondary" text="light">
-        <h5>Your issue reference: #{id}</h5>
-        <Button variant="outline-light" href={url}>View issue on GitHub</Button>
-        </Card>
+          <Id></Id>
         </Suspense>
         <br></br>
 
