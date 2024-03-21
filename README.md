@@ -2,9 +2,9 @@
 
 A very simple and lightweight React form to submit issues directly into GitHub:
 
-🚀 Written in TypeScript using React and Next.js
-🌐 No database required and easy, free hosting via Vercel
-📱 Fully reactive UI and mobile-ready
+- 🚀 Written in TypeScript using React and Next.js
+- 🌐 No database required and easy, free hosting via Vercel
+- 📱 Fully reactive UI and mobile-ready
 
 ## Local Development
 
